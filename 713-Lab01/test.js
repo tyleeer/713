@@ -1,8 +1,10 @@
-let x = 4;
-let y = 15;
-
-if (x > 5 && y > 12) {
-  console.log("ค่ามากจัง");
+let x = 81;
+if (x > 80) {
+  console.log("A");
+} else if (x > 60) {
+  console.log("B");
+} else if (x > 50) {
+  console.log("C");
 } else {
-  console.log(x * y + x / y);
+  console.log("F");
 }
