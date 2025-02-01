@@ -1,5 +1,8 @@
-console.log("hello world");
+let x = 4;
+let y = 15;
 
-let x = 5;
-let y = 10;
-console.log(x + y);
+if (x > 5 && y > 12) {
+  console.log("ค่ามากจัง");
+} else {
+  console.log(x * y + x / y);
+}
