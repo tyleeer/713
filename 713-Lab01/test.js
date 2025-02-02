@@ -1,10 +1,5 @@
-let x = 81;
-if (x > 80) {
-  console.log("A");
-} else if (x > 60) {
-  console.log("B");
-} else if (x > 50) {
-  console.log("C");
-} else {
-  console.log("F");
+function sum(scores) {
+  return scores.reduce((prev, curr) => prev + curr, 0);
 }
+
+console.log(sum([10, 20, 30, 40]));
