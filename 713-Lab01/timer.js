@@ -4,9 +4,7 @@ waitAndPrint = (props = {}) => {
   let count = 1;
   setInterval(() => {
     count++;
-    console.log(
-      `${message} ${repeatedMessage.concat(count > 1 ? " " : "").repeat(count)}`
-    );
+    console.log(`${message} ${repeatedMessage.concat(" ").repeat(count)}`);
   }, interval);
 };
 
