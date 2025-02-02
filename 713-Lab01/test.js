@@ -1,5 +1,5 @@
-function sum(scores) {
-  return scores.reduce((prev, curr) => prev + curr, 0);
-}
+const max = (x, y) => {
+  return Math.max(x, y);
+};
 
-console.log(sum([10, 20, 30, 40]));
+console.log(max(99, 88));
