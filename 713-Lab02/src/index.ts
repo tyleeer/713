@@ -1,10 +1,14 @@
-let x: number | string = 10;
-if (typeof x === "string") {
-  console.log("x is a string");
-} else if (typeof x === "number") {
-  console.log("x is a number");
-} else {
-  console.log("x is neither a string nor a number");
-}
+const add = (a: number, b: number): string => {
+  const result = a + b;
+  return result.toString();
+};
 
-// ผลลัพธ์ที่ได้คือ "x is a number" หรือ x มี type เป็น number
+const result = add(1, 2) + 0;
+console.log(result, "type of result:", typeof result);
+
+const findMax = (numberList: number[]): string => {
+  return Math.max(...numberList).toString();
+};
+
+const result2 = findMax([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100]);
+console.log(result2, "type of result2:", typeof result2);
