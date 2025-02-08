@@ -7,6 +7,7 @@ const result = add(1, 2) + 0;
 console.log(result, "type of result:", typeof result);
 
 const findMax = (numberList: number[]): string => {
+  if (numberList.length <= 1) return "Please provide at least 2 numbers.";
   return Math.max(...numberList).toString();
 };
 
