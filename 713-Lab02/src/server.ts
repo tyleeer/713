@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 const app = express();
+app.use(express.json());
 const port = 3000;
 
 interface Event {
@@ -13,6 +14,8 @@ interface Event {
   petsAllowed: boolean;
   organizer: string;
 }
+
+type CreateEventDTO = Omit<Event, "id">;
 
 const events: Event[] = [
   {
@@ -122,6 +125,16 @@ app.get("/events/:id", (req, res) => {
   } else {
     res.status(404).send("Event not found");
   }
+});
+
+app.post("/events", (req, res) => {
+  const eventData: CreateEventDTO = req.body;
+  const newEvent: Event = {
+    id: events.length + 1,
+    ...eventData,
+  };
+  events.push(newEvent);
+  res.status(201).json(newEvent);
 });
 
 app.listen(port, () => {
