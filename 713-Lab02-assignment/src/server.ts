@@ -4,6 +4,7 @@ const port = 3000;
 
 // Book type definition
 type Book = {
+  id: number;
   title: string;
   Author_name: string;
   description: string;
@@ -13,6 +14,7 @@ type Book = {
 // Sample book data
 const books: Book[] = [
   {
+    id: 1,
     title: "The Shadow of the Wind",
     Author_name: "Carlos Ruiz Zafón",
     description:
@@ -20,6 +22,7 @@ const books: Book[] = [
     groups: ["Mystery", "Historical Fiction", "Gothic Literature"],
   },
   {
+    id: 2,
     title: "Cloud Atlas",
     Author_name: "David Mitchell",
     description:
@@ -27,6 +30,7 @@ const books: Book[] = [
     groups: ["Science Fiction", "Literary Fiction", "Historical Fiction"],
   },
   {
+    id: 3,
     title: "The Name of the Wind",
     Author_name: "Patrick Rothfuss",
     description:
@@ -34,6 +38,7 @@ const books: Book[] = [
     groups: ["Fantasy", "Epic Fantasy", "Magic"],
   },
   {
+    id: 4,
     title: "1Q84",
     Author_name: "Haruki Murakami",
     description:
@@ -41,6 +46,7 @@ const books: Book[] = [
     groups: ["Literary Fiction", "Magical Realism", "Japanese Literature"],
   },
   {
+    id: 5,
     title: "The Invisible Life of Addie LaRue",
     Author_name: "V.E. Schwab",
     description:
@@ -48,6 +54,7 @@ const books: Book[] = [
     groups: ["Fantasy", "Historical Fiction", "Romance"],
   },
   {
+    id: 6,
     title: "Dune",
     Author_name: "Frank Herbert",
     description:
@@ -55,6 +62,7 @@ const books: Book[] = [
     groups: ["Science Fiction", "Space Opera", "Political Fiction"],
   },
   {
+    id: 7,
     title: "The Seven Husbands of Evelyn Hugo",
     Author_name: "Taylor Jenkins Reid",
     description:
@@ -62,6 +70,7 @@ const books: Book[] = [
     groups: ["Historical Fiction", "Romance", "LGBTQ+"],
   },
   {
+    id: 8,
     title: "The Three-Body Problem",
     Author_name: "Cixin Liu",
     description:
@@ -69,6 +78,7 @@ const books: Book[] = [
     groups: ["Science Fiction", "Hard Science Fiction", "Chinese Literature"],
   },
   {
+    id: 9,
     title: "The Night Circus",
     Author_name: "Erin Morgenstern",
     description:
@@ -76,6 +86,7 @@ const books: Book[] = [
     groups: ["Fantasy", "Magical Realism", "Romance"],
   },
   {
+    id: 10,
     title: "Project Hail Mary",
     Author_name: "Andy Weir",
     description:
@@ -97,6 +108,16 @@ app.get("/books", (req: Request, res: Response) => {
     res.json(filteredBooks);
   } else {
     res.json(books);
+  }
+});
+
+app.get("/books/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const book = books.find((book) => book.id === id);
+  if (book) {
+    res.json(book);
+  } else {
+    res.status(404).send("Book not found");
   }
 });
 
