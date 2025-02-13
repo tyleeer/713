@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 const app = express();
+app.use(express.json());
 const port = 3000;
 
 // Book type definition
@@ -10,6 +11,8 @@ type Book = {
   description: string;
   groups: string[];
 };
+
+type CreateBookDTO = Omit<Book, "id">;
 
 // Sample book data
 const books: Book[] = [
@@ -111,13 +114,39 @@ app.get("/books", (req: Request, res: Response) => {
   }
 });
 
-app.get("/books/:id", (req, res) => {
+app.get("/books/:id", (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const book = books.find((book) => book.id === id);
   if (book) {
     res.json(book);
   } else {
     res.status(404).send("Book not found");
+  }
+});
+
+app.post("/books", (req: Request, res: Response) => {
+  const bookData: CreateBookDTO = req.body;
+  const newBook: Book = {
+    id: books.length + 1,
+    ...bookData,
+  };
+  books.push(newBook);
+  res.status(201).json(newBook);
+});
+
+app.put("/books/:id", (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const bookData = req.body;
+
+  const bookIndex = books.findIndex((book) => book.id === id);
+  if (bookIndex !== -1) {
+    const updatedBook: Book = {
+      ...books[bookIndex],
+      ...bookData,
+    };
+
+    books[bookIndex] = updatedBook;
+    res.json(updatedBook);
   }
 });
 
