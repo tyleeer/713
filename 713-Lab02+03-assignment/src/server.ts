@@ -3,6 +3,7 @@ const app = express();
 app.use(express.json());
 const port = 3000;
 
+// notation
 // Book type definition
 type Book = {
   id: number;
@@ -98,25 +99,61 @@ const books: Book[] = [
   },
 ];
 
+function getBookByTitle(title: string): Book[] {
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(title.toString().toLowerCase())
+  );
+  return filteredBooks;
+}
+
+function getAllBooks(): Book[] {
+  return books;
+}
+
+function getBookById(id: number): Book | undefined {
+  return books.find((event) => event.id === id);
+}
+
+function addBook(eventData: CreateBookDTO): Book {
+  const newBook: Book = {
+    id: books.length + 1,
+    ...eventData,
+  };
+  books.push(newBook);
+  return newBook;
+}
+
+function updateBookById(id: number, bookData: CreateBookDTO): Book | undefined {
+  const bookIndex = books.findIndex((book) => book.id === id);
+  if (bookIndex !== -1) {
+    const updatedBook: Book = {
+      ...books[bookIndex],
+      ...bookData,
+    };
+
+    books[bookIndex] = updatedBook;
+    return updatedBook
+  }
+}
+
+// routing
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
 app.get("/books", (req: Request, res: Response) => {
   if (req.query.title) {
-    const title = req.query.title;
-    const filteredBooks = books.filter((book) =>
-      book.title.toLowerCase().includes(title.toString().toLowerCase())
-    );
+    const title = req.query.title as string;
+    const filteredBooks = getBookByTitle(title as string);
     res.json(filteredBooks);
   } else {
-    res.json(books);
+    res.json(getAllBooks());
   }
 });
 
 app.get("/books/:id", (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const book = books.find((book) => book.id === id);
+  const book = getBookById(id);
   if (book) {
     res.json(book);
   } else {
@@ -126,27 +163,19 @@ app.get("/books/:id", (req: Request, res: Response) => {
 
 app.post("/books", (req: Request, res: Response) => {
   const bookData: CreateBookDTO = req.body;
-  const newBook: Book = {
-    id: books.length + 1,
-    ...bookData,
-  };
+  const newBook = addBook(bookData);
   books.push(newBook);
   res.status(201).json(newBook);
 });
 
 app.put("/books/:id", (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const bookData = req.body;
-
-  const bookIndex = books.findIndex((book) => book.id === id);
-  if (bookIndex !== -1) {
-    const updatedBook: Book = {
-      ...books[bookIndex],
-      ...bookData,
-    };
-
-    books[bookIndex] = updatedBook;
+  const bookData: CreateBookDTO = req.body;
+  const updatedBook = updateBookById(id, bookData);
+  if (updatedBook) {
     res.json(updatedBook);
+  } else {
+    res.status(404).send("Book not found");
   }
 });
 
