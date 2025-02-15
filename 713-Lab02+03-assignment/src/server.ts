@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
-import { addBook, CreateBookDTO, getAllBooks, getBookById, getBookByTitle, updateBookById } from "./services/bookServices";
+import { addBook, getAllBooks, getBookById, getBookByTitle, updateBookById } from "./services/bookServices";
+import { CreateBookDTO } from "./models/book";
 const app = express();
 app.use(express.json());
 const port = 3000;
