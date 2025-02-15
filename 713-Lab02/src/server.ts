@@ -3,6 +3,7 @@ const app = express();
 app.use(express.json());
 const port = 3000;
 
+// notation
 interface Event {
   id: number;
   category: string;
@@ -86,6 +87,30 @@ const events: Event[] = [
   },
 ];
 
+function getEventByCategory(category: string): Event[] {
+  const filteredEvents = events.filter((event) => event.category === category);
+  return filteredEvents;
+}
+
+function getAllEvents(): Event[] {
+  return events;
+}
+
+function getEventById(id: number): Event | undefined {
+  return events.find((event) => event.id === id);
+}
+
+function addEvent(eventData: CreateEventDTO): Event {
+  const newEvent: Event = {
+    id: events.length + 1,
+    ...eventData,
+  };
+  events.push(newEvent);
+  return newEvent;
+}
+
+// routing
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
@@ -107,19 +132,17 @@ app.get("/test/param", (req: Request, res: Response) => {
 
 app.get("/events", (req, res) => {
   if (req.query.category) {
-    const category = req.query.category;
-    const filteredEvents = events.filter(
-      (event) => event.category === category
-    );
+    const category = req.query.category as string;
+    const filteredEvents = getEventByCategory(category as string);
     res.json(filteredEvents);
   } else {
-    res.json(events);
+    res.json(getAllEvents());
   }
 });
 
 app.get("/events/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const event = events.find((event) => event.id === id);
+  const event = getEventById(id);
   if (event) {
     res.json(event);
   } else {
@@ -129,11 +152,7 @@ app.get("/events/:id", (req, res) => {
 
 app.post("/events", (req, res) => {
   const eventData: CreateEventDTO = req.body;
-  const newEvent: Event = {
-    id: events.length + 1,
-    ...eventData,
-  };
-  events.push(newEvent);
+  const newEvent = addEvent(eventData);
   res.status(201).json(newEvent);
 });
 
