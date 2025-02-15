@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import type { CreateEventDTO } from "./models/event";
+import type { CreateEventDTO, Event } from "./models/event";
 import { getAllEvents, getEventByCategory, getEventById, addEvent } from "./services/eventService";
 const app = express();
 app.use(express.json());
@@ -44,8 +44,14 @@ app.get("/events/:id", async (req, res) => {
   }
 });
 
+// app.post("/events", async (req, res) => {
+//   const eventData: CreateEventDTO = req.body;
+//   const newEvent = await addEvent(eventData);
+//   res.status(201).json(newEvent);
+// });
+
 app.post("/events", async (req, res) => {
-  const eventData: CreateEventDTO = req.body;
+  const eventData: Event = req.body;
   const newEvent = await addEvent(eventData);
   res.status(201).json(newEvent);
 });

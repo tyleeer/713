@@ -1,5 +1,5 @@
 CREATE TABLE events (
-    id INT PRIMARY KEY,
+    id INT PRIMARY AUTO_INCREMENT NOT NULL,
     category VARCHAR(255),
     title VARCHAR(255),
     description TEXT,
