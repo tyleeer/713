@@ -81,26 +81,26 @@ const events: Event[] = [
   },
 ];
 
-function getEventByCategory(category: string): Event[] {
+function getEventByCategory(category: string): Promise<Event[]> {
   const filteredEvents = events.filter((event) => event.category === category);
-  return filteredEvents;
+  return Promise.resolve(filteredEvents);
 }
 
-function getAllEvents(): Event[] {
-  return events;
+function getAllEvents(): Promise<Event[]> {
+  return Promise.resolve(events);
 }
 
-function getEventById(id: number): Event | undefined {
-  return events.find((event) => event.id === id);
+function getEventById(id: number): Promise<Event | undefined> {
+  return Promise.resolve(events.find((event) => event.id === id));
 }
 
-function addEvent(eventData: CreateEventDTO): Event {
+function addEvent(eventData: CreateEventDTO): Promise<Event> {
   const newEvent: Event = {
     id: events.length + 1,
     ...eventData,
   };
   events.push(newEvent);
-  return newEvent;
+  return Promise.resolve(newEvent);
 }
 
 export {
