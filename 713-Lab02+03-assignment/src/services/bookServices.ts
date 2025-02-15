@@ -91,22 +91,22 @@ const books: Book[] = [
     },
 ];
 
-export function getBookByTitle(title: string): Book[] {
+export function getBookByTitle(title: string): Promise<Book[]> {
     const filteredBooks = books.filter((book) =>
         book.title.toLowerCase().includes(title.toString().toLowerCase())
     );
-    return filteredBooks;
+    return Promise.resolve(filteredBooks);
 }
 
-export function getAllBooks(): Book[] {
-    return books;
+export function getAllBooks(): Promise<Book[]> {
+    return Promise.resolve(books);
 }
 
-export function getBookById(id: number): Book | undefined {
-    return books.find((event) => event.id === id);
+export function getBookById(id: number): Promise<Book | undefined> {
+    return Promise.resolve(books.find((event) => event.id === id));
 }
 
-export function updateBookById(id: number, bookData: CreateBookDTO): Book | undefined {
+export function updateBookById(id: number, bookData: CreateBookDTO): Promise<Book | undefined> {
     const bookIndex = books.findIndex((book) => book.id === id);
     if (bookIndex !== -1) {
         const updatedBook: Book = {
@@ -115,15 +115,15 @@ export function updateBookById(id: number, bookData: CreateBookDTO): Book | unde
         };
 
         books[bookIndex] = updatedBook;
-        return updatedBook
-    }
+        return Promise.resolve(updatedBook)
+    } else return Promise.resolve(undefined);
 }
 
-export function addBook(eventData: CreateBookDTO): Book {
+export function addBook(eventData: CreateBookDTO): Promise<Book> {
     const newBook: Book = {
         id: books.length + 1,
         ...eventData,
     };
     books.push(newBook);
-    return newBook;
+    return Promise.resolve(newBook);
 }
