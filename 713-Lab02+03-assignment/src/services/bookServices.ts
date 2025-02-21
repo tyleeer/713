@@ -1,9 +1,13 @@
 import { Book, CreateBookDTO } from "../models/book";
-import * as repo from "../repository/bookRepository"
+import * as repo from "../repository/bookRepositoryDb"
 
 
 export function getBookByTitle(title: string): Promise<Book[]> {
     return repo.getBookByTitle(title);
+}
+
+export function getBookByCategory(title: string): Promise<Book[]> {
+    return repo.getBookByCategory(title);
 }
 
 export function getAllBooks(): Promise<Book[]> {
@@ -14,7 +18,7 @@ export function getBookById(id: number): Promise<Book | undefined> {
     return repo.getBookById(id);
 }
 
-export function updateBookById(id: number, bookData: CreateBookDTO): Promise<Book | undefined> {
+export function updateBookById(id: number, bookData: CreateBookDTO): Promise<CreateBookDTO | undefined> {
     return repo.updateBookById(id, bookData);
 }
 

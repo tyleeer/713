@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { addBook, getAllBooks, getBookById, getBookByTitle, updateBookById } from "./services/bookServices";
+import { addBook, getAllBooks, getBookById, getBookByTitle, updateBookById, getBookByCategory } from "./services/bookServices";
 import { CreateBookDTO } from "./models/book";
 const app = express();
 app.use(express.json());
@@ -13,6 +13,10 @@ app.get("/books", async (req: Request, res: Response) => {
   if (req.query.title) {
     const title = req.query.title as string;
     const filteredBooks = await getBookByTitle(title as string);
+    res.json(filteredBooks);
+  } else if (req.query.category) {
+    const category = req.query.category as string;
+    const filteredBooks = await getBookByCategory(category as string);
     res.json(filteredBooks);
   } else {
     res.json(await getAllBooks());
