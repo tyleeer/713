@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import type { CreateEventDTO, Event } from "./models/event";
 import { getAllEvents, getEventByCategory, getEventById, addEvent } from "./services/eventService";
+import multer from 'multer';
+import { uploadFile } from './services/uploadFileService';
+
 const app = express();
 app.use(express.json());
 const port = 3000;
@@ -55,6 +58,26 @@ app.post("/events", async (req, res) => {
   const newEvent = await addEvent(eventData);
   res.status(201).json(newEvent);
 });
+
+const upload = multer({ storage: multer.memoryStorage() });
+app.post('/upload', upload.single('file'), async (req: any, res: any) => {
+  try {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    const bucket = 'images';
+    const filePath = `uploads/${file.originalname}`;
+
+    await uploadFile(bucket, filePath, file);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    res.status(500).send('Error uploading file.');
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
