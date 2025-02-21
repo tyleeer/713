@@ -1,0 +1,11 @@
+INSERT INTO books (id, title, author_name, description, categories) VALUES
+(1, 'The Shadow of the Wind', 'Carlos Ruiz Zafón', 'A mystery novel set in post-war Barcelona, following a young boy who discovers a rare book in the Cemetery of Forgotten Books', 'Mystery,Historical Fiction,Gothic Literature'),
+(2, 'Cloud Atlas', 'David Mitchell', 'Six nested stories that explore how the actions and consequences of individual lives impact one another throughout the past, present, and future', 'Science Fiction,Literary Fiction,Historical Fiction'),
+(3, 'The Name of the Wind', 'Patrick Rothfuss', 'A young man grows to become the most notorious wizard his world has ever seen', 'Fantasy,Epic Fantasy,Magic'),
+(4, '1Q84', 'Haruki Murakami', 'A love story, a mystery, a fantasy, a novel of self-discovery, a dystopia to rival George Orwell''s', 'Literary Fiction,Magical Realism,Japanese Literature'),
+(5, 'The Invisible Life of Addie LaRue', 'V.E. Schwab', 'A woman who makes a Faustian bargain to live forever but is cursed to be forgotten by everyone she meets', 'Fantasy,Historical Fiction,Romance'),
+(6, 'Dune', 'Frank Herbert', 'Set on the desert planet Arrakis, this is the story of the boy Paul Atreides, who would become the mysterious Muad''Dib', 'Science Fiction,Space Opera,Political Fiction'),
+(7, 'The Seven Husbands of Evelyn Hugo', 'Taylor Jenkins Reid', 'An aging Hollywood starlet recounts her scandalous life story to an unknown journalist', 'Historical Fiction,Romance,LGBTQ+'),
+(8, 'The Three-Body Problem', 'Cixin Liu', 'China''s Cultural Revolution collides with an alien invasion in this award-winning science fiction epic', 'Science Fiction,Hard Science Fiction,Chinese Literature'),
+(9, 'The Night Circus', 'Erin Morgenstern', 'A competition between two young magicians becomes complicated when they fall in love', 'Fantasy,Magical Realism,Romance'),
+(10, 'Project Hail Mary', 'Andy Weir', 'An astronaut wakes up alone on a spacecraft with no memory of how he got there', 'Science Fiction,Space Fiction,Hard Science Fiction');
