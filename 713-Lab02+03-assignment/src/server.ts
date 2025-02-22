@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { addBook, getAllBooks, getBookById, getBookByTitle, updateBookById, getBookByCategory } from "./services/bookServices";
 import { CreateBookDTO } from "./models/book";
 import multer from 'multer';
+import dotenv from 'dotenv';
+dotenv.config();
 import { uploadFile } from './services/uploadFileService';
 
 const app = express();
@@ -62,8 +64,12 @@ app.post('/upload', upload.single('file'), async (req: any, res: any) => {
       return res.status(400).send('No file uploaded.');
     }
 
-    const bucket = 'images';
-    const filePath = `books`;
+    const bucket = process.env.SUPABASE_BUCKET_NAME;
+    const filePath = process.env.UPLOAD_DIR;
+
+    if (!bucket || !filePath) {
+      return res.status(500).send('Bucket name or file path not configured.');
+    }
 
     const ouputUrl = await uploadFile(bucket, filePath, file);
     res.status(200).send(ouputUrl);
