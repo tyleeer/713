@@ -9,7 +9,7 @@ export interface Event {
     date: string;
     time: string;
     petsAllowed: boolean;
-    organizer: Organizer;
+    organizer?: Organizer | null;
 }
 
 export type CreateEventDTO = Omit<Event, "id">;
