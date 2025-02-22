@@ -1,8 +1,15 @@
-import { createEvents } from './createEvents';
 import { PrismaClient } from '@prisma/client';
+import { createParticipants } from './createParticipants';
+import { createEvents } from './createEvents';
 
 const prisma = new PrismaClient();
-createEvents()
+
+async function main() {
+    await createEvents();
+    await createParticipants();
+}
+
+main()
     .catch((e) => {
         console.error(e);
         process.exit(1);
