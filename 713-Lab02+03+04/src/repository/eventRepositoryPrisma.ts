@@ -16,26 +16,40 @@ export function getAllEvents(): Promise<Event[]> {
 export function getEventById(id: number): Promise<Event | null> {
     return prisma.event.findUnique({
         where: { id },
-        include: { organizer: true },
+        select: {
+            title: true,
+            date: true,
+            time: true,
+            organizerId: true
+        }
     });
 }
 
 export function addEvent(event: Event): Promise<Event> {
     return prisma.event.create({
         data: {
-            category: event.category,
-            title: event.title,
-            description: event.description,
-            location: event.location,
-            date: event.date,
-            time: event.time,
-            petsAllowed: event.petsAllowed,
+            title: event.title || '',
+            description: event.description || '',
+            location: event.location || '',
+            date: event.date || '',
+            time: event.time || '',
+            petsAllowed: event.petsAllowed || false,
+            category: event.category || '',
         }
     });
 }
 
 export function getAllEventsWithOrganizer(): Promise<Event[]> {
     return prisma.event.findMany({
-        include: { organizer: true },
+        select: {
+            id: true,
+            category: true,
+            organizerId: false,
+            organizer: {
+                select: {
+                    name: true,
+                },
+            },
+        }
     });
 }
