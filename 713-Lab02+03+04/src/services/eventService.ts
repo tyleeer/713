@@ -3,11 +3,11 @@ import type { Event, CreateEventDTO } from "../models/event";
 // import * as repo from "../repository/eventRepositoryDb";
 import * as repo from "../repository/eventRepositoryPrisma";
 
-export function getEventByCategory(category: string): Promise<Event[]> {
+export function getEventByCategory(category: string) {
   return repo.getEventByCategory(category);
 }
 
-export function getAllEvents(): Promise<Event[]> {
+export function getAllEvents() {
   return repo.getAllEvents();
 }
 
@@ -15,10 +15,10 @@ export function getEventById(id: number) {
   return repo.getEventById(id);
 }
 
-// export function addEvent(eventData: CreateEventDTO): Promise<Event> {
+// export function addEvent(eventData: CreateEventDTO) {
 //   return repo.addEvent(eventData);
 // }
 
-export function addEvent(eventData: Event): Promise<Event> {
+export function addEvent(eventData: Event) {
   return repo.addEvent(eventData);
 }
