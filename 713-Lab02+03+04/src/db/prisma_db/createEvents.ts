@@ -12,7 +12,6 @@ export async function createEvents() {
             date: "2021-07-01",
             time: "19:00",
             petsAllowed: false,
-            organizer: "Live Nation"
         },
         {
             category: "Music",
@@ -22,7 +21,6 @@ export async function createEvents() {
             date: "2021-07-15",
             time: "12:00",
             petsAllowed: true,
-            organizer: "Festival Republic"
         },
         {
             category: "Sports",
@@ -32,7 +30,6 @@ export async function createEvents() {
             date: "2021-08-01",
             time: "15:00",
             petsAllowed: false,
-            organizer: "Premier League"
         },
         {
             category: "Music",
@@ -42,7 +39,6 @@ export async function createEvents() {
             date: "2021-09-10",
             time: "19:00",
             petsAllowed: true,
-            organizer: "Jazz Fest"
         },
         {
             category: "Theatre",
@@ -52,7 +48,7 @@ export async function createEvents() {
             date: "2021-10-05",
             time: "18:00",
             petsAllowed: false,
-            organizer: "NYC Theatre Group"
+
         },
         {
             category: "Food",
@@ -62,7 +58,6 @@ export async function createEvents() {
             date: "2021-11-20",
             time: "12:00",
             petsAllowed: true,
-            organizer: "Foodie Events"
         }
     ];
 
@@ -75,11 +70,60 @@ export async function createEvents() {
                 location: event.location,
                 date: event.date,
                 time: event.time,
-                petsAllowed: event.petsAllowed,
-                organizer: event.organizer
+                petsAllowed: event.petsAllowed
             }
         });
     }
 
+    const chiangMaiOrg = await prisma.organizer.create({
+        data: {
+            name: 'Chiang Mai'
+        }
+    })
+
+    const cmuOrg = await prisma.organizer.create({
+        data: {
+            name: 'Chiang Mai Uniersity'
+        }
+    })
+
+    const camtOrg = await prisma.organizer.create({
+        data: {
+            name: 'CAMT'
+        }
+    })
+
+    const responseEvents = await prisma.event.findMany();
+
+    await prisma.event.update({
+        where: { id: responseEvents[0].id },
+        data: {
+            organizer: {
+                connect: {
+                    id: chiangMaiOrg.id
+                }
+            }
+        }
+    })
+
+    addOrganizer(responseEvents[1].id, chiangMaiOrg.id);
+    addOrganizer(responseEvents[2].id, cmuOrg.id);
+    addOrganizer(responseEvents[3].id, chiangMaiOrg.id);
+    addOrganizer(responseEvents[4].id, camtOrg.id);
+    addOrganizer(responseEvents[5].id, camtOrg.id);
+
     console.log("Database has been initialized with events.");
+}
+
+async function addOrganizer(eventId: number, organizerId: number) {
+    await prisma.event.update({
+        where: { id: eventId },
+        data: {
+            organizer: {
+                connect: {
+                    id: organizerId
+                }
+            }
+        }
+    })
 }

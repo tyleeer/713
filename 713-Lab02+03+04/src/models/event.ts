@@ -1,3 +1,5 @@
+import { Organizer } from "./organizer";
+
 export interface Event {
     id: number;
     category: string;
@@ -7,7 +9,7 @@ export interface Event {
     date: string;
     time: string;
     petsAllowed: boolean;
-    organizer: string;
+    organizer: Organizer;
 }
 
 export type CreateEventDTO = Omit<Event, "id">;
